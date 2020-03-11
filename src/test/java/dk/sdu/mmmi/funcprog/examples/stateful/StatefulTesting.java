@@ -14,14 +14,16 @@ public class StatefulTesting implements WithQuickTheories {
 
     @Test
     public void sequential() {
-
         Gen<List<Commands>> commandSequences = lists().of(arbitrary()
                 .enumValuesWithNoOrder(Commands.class))
                 .ofSizeBetween(1, 100);
-
         qt()
                 .forAll(longs().between(0, 10), commandSequences)
-                .checkAssert((initialState, commands) -> Sequential.modelCheck(initialState, commands, l -> new BuggyCounter(l), sut -> sut.get()));
+                .checkAssert((initialState, commands) -> Sequential.modelCheck(
+                        initialState,
+                        commands,
+                        l -> new BuggyCounter(l), // Model to SUT in that state
+                        sut -> sut.get())); // SUT to Model
     }
 
     @Test
