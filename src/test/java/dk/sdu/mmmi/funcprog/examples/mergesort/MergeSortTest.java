@@ -7,13 +7,13 @@ import java.util.Arrays;
 
 public class MergeSortTest implements WithQuickTheories {
 
-    public int[] mergeSort(int[] arr) {
+    public Integer[] mergeSort(Integer[] arr) {
         if (arr.length == 1) {
             return arr;
         }
 
-        int[] a = Arrays.copyOfRange(arr, 0, arr.length / 2);
-        int[] b = Arrays.copyOfRange(arr, arr.length / 2, arr.length);
+        Integer[] a = Arrays.copyOfRange(arr, 0, arr.length / 2);
+        Integer[] b = Arrays.copyOfRange(arr, arr.length / 2, arr.length);
 
         a = mergeSort(a);
         b = mergeSort(b);
@@ -21,8 +21,8 @@ public class MergeSortTest implements WithQuickTheories {
         return merge(a, b);
     }
 
-    public int[] merge(int[] a, int[] b) {
-        int[] mergedarray = new int[a.length + b.length];
+    public Integer[] merge(Integer[] a, Integer[] b) {
+        Integer[] mergedarray = new Integer[a.length + b.length];
 
         int i = 0;
         int j = 0;
@@ -56,9 +56,19 @@ public class MergeSortTest implements WithQuickTheories {
         return mergedarray;
     }
 
+    public boolean isSorted(Integer[] array) {
+        for (int i = 0; i < array.length - 1; i++) {
+            if (array[i] > array[i + 1])
+                return false;
+        }
+        return true;
+    }
+
     @Test
     public void sortingTest() {
-
+        qt()
+                .forAll(arrays().ofIntegers(integers().allPositive()).withLengthBetween(10, 100))
+                .check(l1 -> isSorted(mergeSort(l1)));
     }
 
 }
