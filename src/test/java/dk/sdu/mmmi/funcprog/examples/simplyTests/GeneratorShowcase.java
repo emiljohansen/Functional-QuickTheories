@@ -16,11 +16,7 @@ public class GeneratorShowcase {
             .forAll(students()).check((student)-> student.height <= 169);
 
     }
-    @Test
-    public void testGenerator(){
-       // System.out.println(qt().forAll(students(), student -> System.out.println(student.toString())));
 
-    }
     @Test
     public void addingTwoPositiveIntegersAlwaysGivesAPositiveInteger(){
         qt()
