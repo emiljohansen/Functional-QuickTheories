@@ -28,17 +28,16 @@ public class MergeSortTest implements WithQuickTheories {
         int j = 0;
         int k = 0;
 
-        while (i < a.length || j < b.length) {
-            if (a[i] > a[j]) {
+        while (i < a.length && j < b.length) {
+            if (a[i] > b[j]) {
                 mergedarray[k] = b[j];
                 k++;
+                j++;
             } else {
                 mergedarray[k] = a[i];
                 k++;
+                i++;
             }
-
-            i++;
-            j++;
         }
 
         while (i < a.length) {
@@ -67,7 +66,7 @@ public class MergeSortTest implements WithQuickTheories {
     @Test
     public void sortingTest() {
         qt()
-                .forAll(arrays().ofIntegers(integers().allPositive()).withLengthBetween(10, 100))
+                .forAll(arrays().ofIntegers(integers().allPositive()).withLengthBetween(1, 1000))
                 .check(l1 -> isSorted(mergeSort(l1)));
     }
 
