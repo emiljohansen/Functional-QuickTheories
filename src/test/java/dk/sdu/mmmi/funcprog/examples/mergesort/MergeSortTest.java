@@ -88,7 +88,7 @@ public class MergeSortTest implements WithQuickTheories {
         qt()
                 .forAll(arrays().ofIntegers(integers().allPositive()).withLengthBetween(1, 1000)
                 , arrays().ofIntegers(integers().allPositive()).withLengthBetween(1, 1000))
-                .check( (a,b) -> merge(mergeSort(a), mergeSort(b)).equals(mergeSort(ArrayUtils.addAll(a, b))));
+                .check( (a,b) -> Arrays.equals(merge(mergeSort(a), mergeSort(b)), (mergeSort(ArrayUtils.addAll(a, b)))));
 
     }
 
