@@ -1,5 +1,7 @@
 package dk.sdu.mmmi.funcprog.examples.mergesort;
 
+import org.apache.commons.lang3.ArrayUtils;
+
 import org.junit.Test;
 import org.quicktheories.WithQuickTheories;
 
@@ -55,6 +57,11 @@ public class MergeSortTest implements WithQuickTheories {
         return mergedarray;
     }
 
+    /**
+     * Helper for testing that an array is sorted
+     * @param array
+     * @return
+     */
     public boolean isSorted(Integer[] array) {
         for (int i = 0; i < array.length - 1; i++) {
             if (array[i] > array[i + 1])
@@ -63,11 +70,26 @@ public class MergeSortTest implements WithQuickTheories {
         return true;
     }
 
+    /**
+     * Testing that the resulting array is sorted
+     */
     @Test
     public void sortingTest() {
         qt()
                 .forAll(arrays().ofIntegers(integers().allPositive()).withLengthBetween(1, 1000))
                 .check(l1 -> isSorted(mergeSort(l1)));
+    }
+
+    /**
+     * Testing the property that merging two sorted arrays is the same as sorting the combination of the two arrays.
+     */
+    @Test
+    public void mergedSortedLists() {
+        qt()
+                .forAll(arrays().ofIntegers(integers().allPositive()).withLengthBetween(1, 1000)
+                , arrays().ofIntegers(integers().allPositive()).withLengthBetween(1, 1000))
+                .check( (a,b) -> merge(mergeSort(a), mergeSort(b)).equals(mergeSort(ArrayUtils.addAll(a, b))));
+
     }
 
 }
